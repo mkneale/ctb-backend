@@ -37,4 +37,19 @@ describe('Spend model', function() {
     })
     })
   })
+
+  it('can delete a spend', function(done) {
+    var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
+
+    spend.save(function(err) {
+      expect(err).toBeNull();
+
+      Spend.deleteOne(spend,function(err, spends) {
+        expect(err).toBeNull();
+
+        expect(spends).toMatchObject({"deletedCount": 1, "n": 1, "ok": 1});
+        done();
+      });
+    });
+ });
 });
