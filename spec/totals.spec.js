@@ -30,29 +30,17 @@ describe('Total class', function() {
         })
       })
 
-    it('responds to getTotalSpendThisPeriod', function(done){
+   it('responds to getTotalSpendThisPeriod', function(done){
        var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
-       spend.save(function(error, totals){
-          //  expect(error).toBeNull();
-    //       Spend.find = jest.fn().mockResolvedValue([{
-    //         itemSpent: 'Test Sergei',
-    //         itemCat: 'Meerkat',
-    //         itemCost: 15.99,
-    //         dateSpent: new Date(1990, 12, 15)
-    //     },
-    // ])
-          totals = new Totals(function(error){
-                expect(error).toBeNull();
-            }
-            );
-            expect(totals).toEqual(15.99);
-            done();
+       spend.save();
+       const total = new Totals();
+       expect(total.getTotalSpendThisPeriod()).toEqual(15.99);
+
+
           //  console.log(totals.getTotalSpendThisPeriod());
-      //  });
+        });
 
-        })
-
-
+  //  });
     // it('responds to getTotalSpendThisPeriod', async () => {
     //     const spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
     //     spend.save();
@@ -67,7 +55,6 @@ describe('Total class', function() {
     // })
 
 });
-})
 
 // it(‘can save a post’, function(done) {
 //     var post = new Post({ message: ‘some message’ });
