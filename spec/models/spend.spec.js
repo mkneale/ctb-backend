@@ -17,4 +17,24 @@ describe('Spend model', function() {
     expect(spend.itemCost).toEqual(13.49);
     expect(spend.dateSpent).toEqual(new Date(1995, 11, 17));
   });
+
+  it('returns all the records', function(done) {
+    Spend.find(function(error, spends) {
+      expect(error).toBeNull();
+      expect(spends).toEqual([]);
+      done();
+    })
+  })
+
+  it('can save a spend', function(done) {
+    var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
+    spend.save(function(error){
+      expect(error).toBeNull();
+    Spend.find(function(error, spends){
+      expect(error).toBeNull();
+      expect(spends[0]).toMatchObject({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
+      done();
+    })
+    })
+  })
 });
