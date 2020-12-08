@@ -12,12 +12,12 @@ describe('Total class', function() {
             done();
         });
     });
- 
-    it('is a class instance', function() { 
+
+    it('is a class instance', function() {
         var totals = new Totals();
         expect(totals).toBeInstanceOf(Totals);
     });
-  
+
     it('can save a spend', function(done) {
         var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
         spend.save(function(error){
@@ -30,26 +30,28 @@ describe('Total class', function() {
         })
       })
 
-    it('responds to getTotalSpendThisPeriod', function(){
+    it('responds to getTotalSpendThisPeriod', function(done){
        var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
-       spend.save(function(error){
+       spend.save(function(error, totals){
           //  expect(error).toBeNull();
     //       Spend.find = jest.fn().mockResolvedValue([{
-    //         itemSpent: 'Test Sergei', 
-    //         itemCat: 'Meerkat', 
-    //         itemCost: 15.99, 
+    //         itemSpent: 'Test Sergei',
+    //         itemCat: 'Meerkat',
+    //         itemCost: 15.99,
     //         dateSpent: new Date(1990, 12, 15)
     //     },
     // ])
-          var totals = new Totals(function(error){
+          totals = new Totals(function(error){
                 expect(error).toBeNull();
             }
             );
+            expect(totals).toEqual(15.99);
+            done();
           //  console.log(totals.getTotalSpendThisPeriod());
       //  });
-    
+
         })
-    expect(totals.getTotalSpendThisPeriod()).toEqual(15.99);
+
 
     // it('responds to getTotalSpendThisPeriod', async () => {
     //     const spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
@@ -58,7 +60,7 @@ describe('Total class', function() {
     //     const data = await totals.getTotalSpendThisPeriod();
     //     expect(data).toBe([]);
     //   });
-      
+
 
     // it('', function(){
 
