@@ -7,7 +7,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-var totals = new Totals;
-totals.getTotalSpendThisPeriod();
+//var totals = new Totals;
+// console.log(Totals.getTotalSpendThisPeriod);
+// Totals.getTotalSpendThisPeriod;
 
 module.exports = router;
