@@ -1,8 +1,9 @@
+const { TestScheduler } = require('jest');
 var mongoose = require('mongoose');
 
 require('./mongodb_helper')
-var Totals = require('../lib/Totals');
-var Spend = require('../models/spend');
+const Totals = require('../lib/Totals');
+const Spend = require('../models/spend');
 
 
 describe('Total class', function() {
@@ -18,60 +19,78 @@ describe('Total class', function() {
         expect(totals).toBeInstanceOf(Totals);
     });
   
-    it('can save a spend', function(done) {
-        var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
-        spend.save(function(error){
-          expect(error).toBeNull();
-        Spend.find(function(error, spends){
-          expect(error).toBeNull();
-          expect(spends[0]).toMatchObject({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
+    it('gives back the current total', function() {
+      var totals = new Totals();
+      expect(totals.getTotalSpendThisPeriod()).toBe(0)
+    })
+
+    test('the data is peanut butter', done => {
+      function callback(data) {
+        try {
+          expect(data).toBe(0);
           done();
-        })
-        })
-      })
+        } catch (error) {
+          done(error);
+        }
+      }
+      var totals = new Totals();
+      const mockFind = jest
+      .spyOn(Spend, 'find')
+      .mockReturnValue([{
+        itemSpent: 'Test Sergei', 
+        itemCat: 'Meerkat', 
+        itemCost: 15.99, 
+        dateSpent: new Date(1990, 12, 15)
+        }
+      ])
+      const expected = [{
+        itemSpent: 'Test Sergei', 
+        itemCat: 'Meerkat', 
+        itemCost: 15.99, 
+        dateSpent: new Date(1990, 12, 15)
+        }
+      ]
+      totals.getTotalSpendThisPeriod(callback);
+    });
 
-    it('responds to getTotalSpendThisPeriod', function(){
-       var spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
-       spend.save(function(error){
-          //  expect(error).toBeNull();
-    //       Spend.find = jest.fn().mockResolvedValue([{
-    //         itemSpent: 'Test Sergei', 
-    //         itemCat: 'Meerkat', 
-    //         itemCost: 15.99, 
-    //         dateSpent: new Date(1990, 12, 15)
-    //     },
-    // ])
-          var totals = new Totals(function(error){
-                expect(error).toBeNull();
-            }
-            );
-          //  console.log(totals.getTotalSpendThisPeriod());
-      //  });
+    it('responds to getTotalSpendThisPeriod', async function() {
+      
+      var totals = new Totals();
+ 
+      const mockFind = jest
+      .spyOn(Spend, 'find')
+      // .mockImplementation(
+      //   [{
+      //     itemSpent: 'Test Sergei', 
+      //     itemCat: 'Meerkat', 
+      //     itemCost: 15.99, 
+      //     dateSpent: new Date(1990, 12, 15)
+      //     }
+      //   ]
+      // )
+      .mockReturnValue([{
+        itemSpent: 'Test Sergei', 
+        itemCat: 'Meerkat', 
+        itemCost: 15.99, 
+        dateSpent: new Date(1990, 12, 15)
+        }
+      ])
+      const expected = [{
+        itemSpent: 'Test Sergei', 
+        itemCat: 'Meerkat', 
+        itemCost: 15.99, 
+        dateSpent: new Date(1990, 12, 15)
+        }
+      ]
+    console.log(mockFind());
+      const result = totals.getTotalSpendThisPeriod();
+      
     
+       
+      await expect(totals.getTotalSpendThisPeriod()).toEqual(expected);
+      //await expect(mockFind).toHaveBeenCalledTimes(3); 
+     
         })
-    expect(totals.getTotalSpendThisPeriod()).toEqual(15.99);
-
-    // it('responds to getTotalSpendThisPeriod', async () => {
-    //     const spend = new Spend({ itemSpent: 'Test Sergei', itemCat: 'Meerkat', itemCost: 15.99, dateSpent: new Date(1990, 12, 15) });
-    //     spend.save();
-    //     var totals = new Totals();
-    //     const data = await totals.getTotalSpendThisPeriod();
-    //     expect(data).toBe([]);
-    //   });
       
 
-    // it('', function(){
-
-    // })
-
-});
 })
-
-// it(‘can save a post’, function(done) {
-//     var post = new Post({ message: ‘some message’ });
-//     post.save(function(err) {
-//       expect(err).toBeNull();
-//       Post.find(function(err, posts) {
-//         expect(err).toBeNull();
-//         expect(posts[0]).toMatchObject({ message: ‘some message’ });
-//         done();
