@@ -4,7 +4,7 @@ var TotalsController = {
 
 Index: async function(req, res) {
     let getSpend = await getTotalSpendThisPeriod();
-    res.json({  totalSpendThisPeriod: getSpend,
+    res.json({  totalSpendThisPeriod: getSpend.toFixed(2),
                 totalMoneyLeft: 0,
                 totalTimeTillPayday: 0,
                 totalMoneyLeftPerDay: 0,
