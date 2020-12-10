@@ -34,6 +34,18 @@ var ExpenseController = {
     });
   },
 
+  Update: async function(req, res) {
+    try{const updatedExpense = await Expense.updateOne({_id: req.params.expenseId}, 
+                                                        {$set: {expense: req.body.expense, 
+                                                        expenseDate: req.body.expenseDate, 
+                                                        expenseCost: req.body.expenseCost, 
+                                                        expenseCat: req.body.expenseCat}});
+    res.json(updatedExpense);
+  } catch(err) {
+    res.json({message: err})
+  };  
+  }
+
 }
 
 module.exports = ExpenseController;
