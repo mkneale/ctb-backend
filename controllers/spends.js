@@ -34,6 +34,28 @@ var SpendsController = {
     });
   },
 
+  Patch: function(req, res) {
+    const spendId = req.params.spendId;
+    var dateSpent = req.body.dateSpent;
+    var itemSpent = req.body.itemSpent;
+    var itemCat = req.body.itemCat;
+    var itemCost = req.body.itemCost;
+
+   Spend.findByIdAndUpdate({_id: spendId},
+     {dateSpent: dateSpent,
+      itemSpent: itemSpent, itemCat:itemCat, itemCost: itemCost},
+       function (err, spend) {
+     if (err) { throw err;}
+     res.json({updated: spend})
+
+   })
+
+
+
+
+
+  }
+
 }
 
 module.exports = SpendsController;
