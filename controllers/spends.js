@@ -50,11 +50,17 @@ var SpendsController = {
 
    })
 
+  },
+  Find: function(req, res) {
+    var spendId = req.params.spendId;
+    Spend.findById(spendId, function(err, spends) {
+      if (err) { throw err; }
 
-
-
-
+      res.json(spends);
+    });
   }
+
+  
 
 }
 
