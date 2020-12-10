@@ -24,6 +24,16 @@ var SpendsController = {
     });
   },
 
+  Delete: function(req, res) {
+    const spendId = req.params.spendId;
+
+    Spend.findByIdAndDelete(spendId, function (err, spend) {
+      if (err) { throw err;}
+
+    res.json({deleted: spend});
+    });
+  },
+
 }
 
 module.exports = SpendsController;
