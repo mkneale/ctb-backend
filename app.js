@@ -10,6 +10,7 @@ const spendsRouter = require('./routes/spends');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const totalsRouter = require('./routes/totals');
+const expenseRouter = require('./routes/expense');
 require('dotenv/config');
 
 var app = express();
@@ -29,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/spends', spendsRouter);
 app.use('/totals', totalsRouter);
+app.use('/expenses', expenseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
