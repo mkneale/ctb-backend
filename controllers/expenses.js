@@ -35,17 +35,52 @@ var ExpenseController = {
   },
 
   Update: async function(req, res) {
-    try{const updatedExpense = await Expense.updateOne({_id: req.params.expenseId}, 
-                                                        {$set: {expense: req.body.expense, 
-                                                        expenseDate: req.body.expenseDate, 
-                                                        expenseCost: req.body.expenseCost, 
+    try{const updatedExpense = await Expense.updateOne({_id: req.params.expenseId},
+                                                        {$set: {expense: req.body.expense,
+                                                        expenseDate: req.body.expenseDate,
+                                                        expenseCost: req.body.expenseCost,
                                                         expenseCat: req.body.expenseCat}});
     res.json(updatedExpense);
   } catch(err) {
     res.json({message: err})
-  };  
-  }
+  };
+},
+
+Total: async function(req, res) {
+    let getExpense = await getTotalExpenseThisPeriod();
+    res.json({  totalExpenseThisPeriod: getExpense.toFixed(2),
+                totalMoneyLeft: 0,
+                totalTimeTillPayday: 0,
+                totalMoneyLeftPerDay: 0,
+                totalsPerCategory: [ ]
+            });
+
+
+
+const getTotalArrayPromise = () => {
+    return new Promise((resolve, reject) => {
+        Expense.find(function(err, expenses) {
+            if (err) {
+                reject (err)
+                return
+            }
+        resolve(expenses)
+        })
+    })
+};
+
+const getTotalExpensesThisPeriod = async () => {
+    var data = await getTotalArrayPromise();
+    let total = 0;
+        data.forEach(expense => {
+            total += expense.expenseCost;
+        });
+        return total;
+  };
 
 }
+
+}
+
 
 module.exports = ExpenseController;
