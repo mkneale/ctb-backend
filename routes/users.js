@@ -4,7 +4,7 @@ var router = express.Router();
 
 var usersController = require('../controllers/users');
 
-router.post('/', usersController.Create);
+router.post('/new', usersController.Create);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
