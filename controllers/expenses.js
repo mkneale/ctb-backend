@@ -47,7 +47,7 @@ var ExpenseController = {
 },
 
 Total: async function(req, res) {
-    let getExpense = await getTotalExpenseThisPeriod();
+    let getExpense = await getTotalExpensesThisPeriod();
     res.json({  totalExpenseThisPeriod: getExpense.toFixed(2),
                 totalMoneyLeft: 0,
                 totalTimeTillPayday: 0,
@@ -56,6 +56,9 @@ Total: async function(req, res) {
             });
 
 
+}
+
+};
 
 const getTotalArrayPromise = () => {
     return new Promise((resolve, reject) => {
@@ -77,10 +80,6 @@ const getTotalExpensesThisPeriod = async () => {
         });
         return total;
   };
-
-}
-
-}
 
 
 module.exports = ExpenseController;
