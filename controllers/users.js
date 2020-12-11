@@ -11,15 +11,32 @@ var UsersController = {
             email: req.body.email,
             password: hashedPassword,
         });
-        // const user1 = await User.findOne({email: req.body.email});
-        // if (user1) {
-        //     const compare = await  }
-        // else{
+
         user.save(function(err){
             if(err) {throw err}
         });
         res.json({user: user})
-    }
+    },
+
+    Login: async function(req, res) {
+        try {
+        const user = await User.findOne({email: req.body.email});
+        if (user){
+            const cmp = await bcrypt.compare(req.body.password, user.password);
+            if (cmp){
+                res.json(user)
+            } else{
+                res.send("Wrong username or password");
+            }
+        } else {
+        res.send("Wrong username or password.");
+        }
+        } catch (error) {
+        console.log(error);
+        res.status(500).send("Internal Server error Occured");
+        }    
+            }
+            
 };
 
 module.exports = UsersController;
