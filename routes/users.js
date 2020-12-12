@@ -6,6 +6,7 @@ var usersController = require('../controllers/users');
 
 router.post('/new', usersController.Create);
 router.post('/login', usersController.Login);
+router.post('/exist', usersController.Exist);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

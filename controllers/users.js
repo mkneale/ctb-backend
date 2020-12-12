@@ -34,9 +34,23 @@ var UsersController = {
         } catch (error) {
         console.log(error);
         res.status(500).send("Internal Server error Occured");
-        }    
-            }
-            
+        }
+      },
+
+    Exist: async function(req, res) {
+      try {
+        const email = await User.findOne({email: req.body.email});
+        if (email) {
+          res.json({status: 'unavailable'})
+        } else {
+          res.json({status: 'available'})
+        }
+      }catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server error Occured");
+      }
+    }
+
 };
 
 module.exports = UsersController;
