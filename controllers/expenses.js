@@ -24,6 +24,16 @@ var ExpenseController = {
     });
   },
 
+  FindbyUser: function(req, res) {
+    const userId = req.params.userId;
+
+    Expense.find({userId: userId}, function(err, expense) {
+      if (err) { throw err; }
+
+      res.json({expense: expense});
+    });
+  },
+
   Delete: function(req, res) {
     const expenseId = req.params.expenseId;
 
