@@ -66,8 +66,41 @@ Total: async function(req, res) {
             });
 
 
+},
+TotalByUser: async function(req, res) {
+  const userID = req.params.userId;
+  let getExpense = await getTotalExpensesThisPeriodByUser(userID);
+  res.json({  totalExpenseThisPeriod: getExpense.toFixed(2),
+              totalMoneyLeft: 0,
+              totalTimeTillPayday: 0,
+              totalMoneyLeftPerDay: 0,
+              totalsPerCategory: [ ]
+          });
+
+
 }
 
+};
+
+const getTotalArrayByUserPromise = (userID) => {
+  return new Promise((resolve, reject) => {
+      Expense.find({userId: userID}, function(err, expenses) {
+          if (err) {
+              reject (err)
+              return
+          }
+      resolve(expenses)
+      })
+  })
+};
+
+const getTotalExpensesThisPeriodByUser = async (userID) => {
+  var data = await getTotalArrayByUserPromise(userID);
+  let total = 0;
+      data.forEach(expense => {
+          total += expense.expenseCost;
+      });
+      return total;
 };
 
 const getTotalArrayPromise = () => {
