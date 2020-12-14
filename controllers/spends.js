@@ -24,6 +24,16 @@ var SpendsController = {
     });
   },
 
+  FindbyUser: function(req, res) {
+    const userId = req.params.userId;
+
+    Spend.find({userId: userId}, function(err, spends) {
+      if (err) { throw err; }
+
+      res.json({spends: spends});
+    });
+  },
+
   Delete: function(req, res) {
     const spendId = req.params.spendId;
 
