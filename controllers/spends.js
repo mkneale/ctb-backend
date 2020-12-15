@@ -33,7 +33,17 @@ var SpendsController = {
       res.json({spends: spends});
     });
   },
+  FindbyUserThisMonth: function(req, res) {
+    const userId = req.params.userId;
+    const date = new Date();
+    const y = date.getFullYear();
+    const m = new Date().getMonth();
+    Spend.find({userId: userId, dateSpent: {$gte: new Date(y, m, 1), $lte: new Date(y, m + 1, 0)}}, function(err, spends) {
+      if (err) { throw err; }
 
+      res.json({spends: spends});
+    });
+  },
   Delete: function(req, res) {
     const spendId = req.params.spendId;
 
@@ -70,7 +80,7 @@ var SpendsController = {
     });
   }
 
-  
+
 
 }
 
