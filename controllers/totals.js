@@ -6,6 +6,7 @@ Index: async function(req, res) {
     let getSpend = await getTotalSpendThisPeriod();
     res.json({  totalSpendThisPeriod: getSpend.toFixed(2),
                 totalMoneyLeft: 0,
+                salary: 2300,
                 totalTimeTillPayday: 0,
                 totalMoneyLeftPerDay: 0,
                 totalsPerCategory: [ ]
@@ -16,6 +17,7 @@ Index: async function(req, res) {
     let getSpend = await getTotalSpendThisPeriodByUser(userID);
     res.json({  totalSpendThisPeriod: getSpend.toFixed(2),
                 totalMoneyLeft: 0,
+                salary: 2300,
                 totalTimeTillPayday: 0,
                 totalMoneyLeftPerDay: 0,
                 totalsPerCategory: [ ]
@@ -27,14 +29,14 @@ Index: async function(req, res) {
 const getTotalArrayByUserPromise = (userID) => {
     return new Promise((resolve, reject) => {
         Spend.find({userId: userID}, function(err, spends) {
-            if (err) { 
+            if (err) {
                 reject (err)
                 return
             }
         resolve(spends)
         })
     })
-}   
+}
 
 const getTotalSpendThisPeriodByUser = async (userID) => {
     var data = await getTotalArrayByUserPromise(userID);
@@ -48,14 +50,14 @@ const getTotalSpendThisPeriodByUser = async (userID) => {
 const getTotalArrayPromise = () => {
     return new Promise((resolve, reject) => {
         Spend.find(function(err, spends) {
-            if (err) { 
+            if (err) {
                 reject (err)
                 return
             }
         resolve(spends)
         })
     })
-}   
+}
 
 const getTotalSpendThisPeriod = async () => {
     var data = await getTotalArrayPromise();
