@@ -14,10 +14,13 @@ Index: async function(req, res) {
   },
   Find: async function(req, res) {
       const userID = req.params.userId;
+      let salary = await Total.find({userId: userID}, function(err, salary) {
+        if (err) { throw err; };
+      });
     let getSpend = await getTotalSpendThisPeriodByUser(userID);
     res.json({  totalSpendThisPeriod: getSpend.toFixed(2),
                 totalMoneyLeft: 0,
-                salary: 2300,
+                salary: salary[0].salary,
                 totalTimeTillPayday: 0,
                 totalMoneyLeftPerDay: 0,
                 totalsPerCategory: [ ]
