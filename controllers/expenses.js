@@ -4,7 +4,6 @@ var ExpenseController = {
   New: function(req, res) {
     var expense = new Expense({
       userId: req.body.userId,
-      expenseDate: req.body.expenseDate,
       expense: req.body.expense,
       expenseCat: req.body.expenseCat,
       expenseCost: req.body.expenseCost
@@ -47,7 +46,6 @@ var ExpenseController = {
   Update: async function(req, res) {
     try{const updatedExpense = await Expense.updateOne({_id: req.params.expenseId},
                                                         {$set: {expense: req.body.expense,
-                                                        expenseDate: req.body.expenseDate,
                                                         expenseCost: req.body.expenseCost,
                                                         expenseCat: req.body.expenseCat}});
     res.json(updatedExpense);

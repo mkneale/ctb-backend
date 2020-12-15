@@ -5,16 +5,6 @@ var ExpenseSchema = new mongoose.Schema({
     type: String
   },
 
-  dateLogged: {
-    type: Date,
-    default: Date.now
-  },
-
-  expenseDate: {
-    type: Date,
-    default: Date.now
-  },
-
   expense: {
     type: String,
     required: true
