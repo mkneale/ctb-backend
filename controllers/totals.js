@@ -28,7 +28,10 @@ Index: async function(req, res) {
 
 const getTotalArrayByUserPromise = (userID) => {
     return new Promise((resolve, reject) => {
-        Spend.find({userId: userID}, function(err, spends) {
+        const date = new Date();
+        const y = date.getFullYear();
+        const m = new Date().getMonth();
+        Spend.find({userId: userID, dateSpent: {$gte: new Date(y, m, 1), $lte: new Date(y, m + 1, 0)}}, function(err, spends) {
             if (err) {
                 reject (err)
                 return
