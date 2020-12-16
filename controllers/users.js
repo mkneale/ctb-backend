@@ -49,17 +49,7 @@ var UsersController = {
       console.log(error);
       res.status(500).send("Internal Server error Occured");
       }
-    },
-
-    Find:  function(req, res){
-      const userName = req.params.userName;
-      User.find({email: userName}, function(err, user) {
-        if (err) { throw err; }
-
-        res.json({userId: user[0]._id});
-      });
     }
-
 };
 
 module.exports = UsersController;
