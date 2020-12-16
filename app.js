@@ -52,4 +52,6 @@ app.use(function(err, req, res, next) {
 mongoose.connect(process.env.DB_CONNECTION, { useUnifiedTopology: true, useNewUrlParser: true },
 () => console.log('connected to DB!'));
 
+app.listen(process.env.PORT || 3080,() => console.log('Server is running...'));
+
 module.exports = app;
